@@ -12,7 +12,7 @@ pip install genquiz
 # Getting Started
 Please follow this link:
 
-https://www.youtube.com/channel/UCIlmY13nFIVFtd1S1ocnn3Q
+https://youtu.be/UEX7Ln70_Q4
 
 
 ## Authors
