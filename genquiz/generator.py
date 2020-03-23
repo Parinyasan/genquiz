@@ -8,15 +8,13 @@ import pandas as pd
 import random
 import pickle
 import os
+import re
+import html
+
 
 
 class Quiz:
     def __init__(self, student_id, student_name, questions, solutions, question_path, solution_path):
-        # for correct Greek or special characters in MathML
-        self.specialchar = {'&InvisibleTimes;': '&#8290;',
-                            '&pi;': '&#960;',
-                            }
-
         self.doc = docx.Document()
 
         self.student_id = student_id
@@ -60,8 +58,9 @@ class Quiz:
                  </math>
                 '''.format(math_ml, equal)
         # Converts mathml string
-        for ch in self.specialchar:
-            mathml_string = mathml_string.replace(ch, self.specialchar[ch])
+        specialchar = re.findall(r'&[^#].+?;', mathml_string)
+        for ch in specialchar:
+            mathml_string = mathml_string.replace(ch, '&#' + str(ord(html.unescape(ch))) + ';')
 
         tree = etree.fromstring(mathml_string)
 
