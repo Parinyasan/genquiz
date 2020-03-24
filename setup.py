@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="genquiz",
-    version="1.0.5",
+    version="1.0.6",
     author="Parinya Sanguansat",
     author_email="sanguansat@yahoo.com",
     description="Create individual questions for online examination",

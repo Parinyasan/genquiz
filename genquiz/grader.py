@@ -5,6 +5,11 @@ import pickle
 from .generator import *
 
 
+def is_numeric(obj):
+    attrs = [np.int, np.int32, np.float, np.float32, np.float64]
+    return any(obj.dtype == attr for attr in attrs)
+
+
 def Grading(answer_path, solution_path, csv_file='grading.csv'):
     csv = open(csv_file, 'w')
     for fn in os.listdir(answer_path):
@@ -22,7 +27,11 @@ def Grading(answer_path, solution_path, csv_file='grading.csv'):
                         ans = np.array([[i.value for i in j] for j in ans])
                     else:
                         ans = np.array([ans.value])
-                    score = np.sum(ans.astype(np.str) == solution.solution.astype(np.str)) / ans.size * solution.score
+                    if is_numeric(ans):
+                        score = np.abs(ans - solution.solution)
+                        score = np.sum(score <= 0.1) / ans.size * solution.score
+                    else:
+                        score = np.sum(ans.astype(np.str) == solution.solution.astype(np.str)) / ans.size * solution.score
                     csv.write(',' + str(score))
                 csv.write('\n')
     csv.close()
