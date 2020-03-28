@@ -41,7 +41,6 @@ class Quiz:
 
     def __math_to_word(self, eq, equal=None):
         math_ml = mathml(eq, printer='presentation')
-        equal = mathml(equal, printer='presentation')
         # Creates mathml string
         if equal is None:
             mathml_string = '''
@@ -50,6 +49,7 @@ class Quiz:
                 </math>
                 '''.format(math_ml)
         else:
+            equal = mathml(equal, printer='presentation')
             mathml_string = '''
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                     {0}
